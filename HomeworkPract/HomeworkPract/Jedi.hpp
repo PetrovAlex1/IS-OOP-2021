@@ -2,12 +2,14 @@
 #include <iostream>
 #include "Planet.hpp"
 
-enum JediRank
+enum class JediRank
 {
 	Padawan,
 	Master,
 	GrandMaster
 };
+
+void CopyText1(char* firstText, const char* secondText);
 
 char* EnumTocharArray(JediRank rank);
 
@@ -28,23 +30,23 @@ public:
 
 	Jedi& operator=(const Jedi& otherJedi);
 
-	Jedi(char* _name, JediRank _rank, float _midichlorian, Planet _planet, char* _spicies, char* _militaryRank);
+	Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet _planet, const char* _spicies, const char* _militaryRank);
 
 	~Jedi();
 
 	void Print();
 
-	void SetName(char* _name);
+	void SetName(const char* _name);
 
-	void SetRank(JediRank _rank);
+	void SetRank(const JediRank _rank);
 
-	void SetMidichlorian(float _midichlorian);
+	void SetMidichlorian(const float _midichlorian);
 
-	void SetPlanet(Planet _planet);
+	void SetPlanet(const Planet _planet);
 
-	void SetSpicies(char* _spicies);
+	void SetSpicies(const char* _spicies);
 
-	void SetMilitaryRank(char* _militaryRank);
+	void SetMilitaryRank(const char* _militaryRank);
 
 	char* GetName();
 

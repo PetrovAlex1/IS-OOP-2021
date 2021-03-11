@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Planet.hpp"
 
-enum TrooperRank
+enum class TrooperRank
 {
 	Trooper,
 	SquadLeader,
@@ -12,6 +12,8 @@ enum TrooperRank
 	RegimentCommander,
 	GeneralOfLegion
 };
+
+void CopyText(char* firstText, const char* secondText);
 
 char* EnumTocharArray(TrooperRank rank);
 
@@ -30,19 +32,19 @@ public:
 
 	Stormtrooper& operator=(const Stormtrooper& other);
 
-	Stormtrooper(char* _id, TrooperRank _rank, char* _type, Planet& _planet);
+	Stormtrooper(const char* _id, const TrooperRank _rank, const char* _type, const Planet& _planet);
 
 	~Stormtrooper();
 
 	void Print();
 
-	void SetID(char* _id);
+	void SetID(const char* _id);
 
-	void SetRank(TrooperRank _rank);
+	void SetRank(const TrooperRank _rank);
 
-	void SetType(char* _type);
+	void SetType(const char* _type);
 
-	void SetPlanet(Planet& otherPlanet);
+	void SetPlanet(const Planet& otherPlanet);
 
 	char* GetID();
 

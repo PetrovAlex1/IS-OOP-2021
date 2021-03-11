@@ -1,5 +1,16 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include "Planet.hpp"
+
+void CopyText2(char* firstText, const char* secondText)
+{
+	int i;
+
+	for (i = 0; i < strlen(secondText); i++)
+	{
+		firstText[i] = secondText[i];
+	}
+
+	firstText[i] = '\0';
+}
 
 Planet::Planet()
 {
@@ -11,11 +22,11 @@ Planet::Planet()
 Planet::Planet(const Planet& otherPlanet)
 {
 	this->name = new char[strlen(otherPlanet.name) + 1];
-	strcpy(this->name, otherPlanet.name);
+	CopyText2(this->name, otherPlanet.name);
 	this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
-	strcpy(this->planetSystem, otherPlanet.planetSystem);
+	CopyText2(this->planetSystem, otherPlanet.planetSystem);
 	this->republic = new char[strlen(otherPlanet.republic) + 1];
-	strcpy(this->republic, otherPlanet.republic);
+	CopyText2(this->republic, otherPlanet.republic);
 }
 
 Planet& Planet::operator=(const Planet& otherPlanet)
@@ -28,20 +39,20 @@ Planet& Planet::operator=(const Planet& otherPlanet)
 	}
 
 	this->name = new char[strlen(otherPlanet.name) + 1];
-	strcpy(this->name, otherPlanet.name);
+	CopyText2(this->name, otherPlanet.name);
 	this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
-	strcpy(this->planetSystem, otherPlanet.planetSystem);
+	CopyText2(this->planetSystem, otherPlanet.planetSystem);
 	this->republic = new char[strlen(otherPlanet.republic) + 1];
-	strcpy(this->republic, otherPlanet.republic);
+	CopyText2(this->republic, otherPlanet.republic);
 
 	return *this;
 }
 
-Planet::Planet(char* otherName, char* otherPlanetSystem, char* otherRepublic)
+Planet::Planet(const char* otherName, const char* otherPlanetSystem, const char* otherRepublic)
 {
-	strcpy(this->name, otherName);
-	strcpy(this->planetSystem, otherPlanetSystem);
-	strcpy(this->republic, otherRepublic);
+	CopyText2(this->name, otherName);
+	CopyText2(this->planetSystem, otherPlanetSystem);
+	CopyText2(this->republic, otherRepublic);
 }
 
 Planet::~Planet()
@@ -56,19 +67,19 @@ void Planet::Print()
 	std::cout << "Planet " << this->name << " from " << this->planetSystem << " belongs to republic " << this->republic << std::endl;
 }
 
-void Planet::SetName(char* _name)
+void Planet::SetName(const char* _name)
 {
-	strcpy(this->name, _name);
+	CopyText2(this->name, _name);
 }
 
-void Planet::SetPlanetSystem(char* _planetSystem)
+void Planet::SetPlanetSystem(const char* _planetSystem)
 {
-	strcpy(this->planetSystem, _planetSystem);
+	CopyText2(this->planetSystem, _planetSystem);
 }
 
-void Planet::SetRepublic(char* _republic)
+void Planet::SetRepublic(const char* _republic)
 {
-	strcpy(this->republic, _republic);
+	CopyText2(this->republic, _republic);
 }
 
 char* Planet::GetName()

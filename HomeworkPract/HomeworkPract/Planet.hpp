@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+void CopyText2(char* firstText, const char* secondText);
+
 class Planet
 {
 private:
@@ -15,17 +17,17 @@ public:
 
 	Planet& operator=(const Planet& otherPlanet);
 
-	Planet(char* otherName, char* otherPlanetSystem, char* otherRepublic);
+	Planet(const char* otherName, const char* otherPlanetSystem, const char* otherRepublic);
 
 	~Planet();
 
 	void Print();
 
-	void SetName(char* _name);
+	void SetName(const char* _name);
 
-	void SetPlanetSystem(char* _planetSystem);
+	void SetPlanetSystem(const char* _planetSystem);
 
-	void SetRepublic(char* _republic);
+	void SetRepublic(const char* _republic);
 
 	char* GetName();
 
