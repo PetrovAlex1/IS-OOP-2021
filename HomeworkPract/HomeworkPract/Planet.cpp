@@ -1,16 +1,27 @@
 #include "Planet.hpp"
+#include <cstring>
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#pragma warning(disable:4996)
 
-void CopyText2(char* firstText, const char* secondText)
-{
-	int i;
-
-	for (i = 0; i < strlen(secondText); i++)
-	{
-		firstText[i] = secondText[i];
-	}
-
-	firstText[i] = '\0';
-}
+//void CopyText2(char* firstText, const char* secondText)
+//{
+//	int i;
+//	if (firstText == nullptr)
+//	{
+//		delete[] firstText;
+//	}
+//
+//	firstText = new char[strlen(secondText) + 1];
+//
+//	for (i = 0; i < strlen(secondText); i++)
+//	{
+//		firstText[i] = secondText[i];
+//	}
+//
+//	firstText[i] = '\0';
+//}
 
 Planet::Planet()
 {
@@ -22,11 +33,11 @@ Planet::Planet()
 Planet::Planet(const Planet& otherPlanet)
 {
 	this->name = new char[strlen(otherPlanet.name) + 1];
-	CopyText2(this->name, otherPlanet.name);
+	strcpy(this->name, otherPlanet.name);
 	this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
-	CopyText2(this->planetSystem, otherPlanet.planetSystem);
+	strcpy(this->planetSystem, otherPlanet.planetSystem);
 	this->republic = new char[strlen(otherPlanet.republic) + 1];
-	CopyText2(this->republic, otherPlanet.republic);
+	strcpy(this->republic, otherPlanet.republic);
 }
 
 Planet& Planet::operator=(const Planet& otherPlanet)
@@ -39,20 +50,20 @@ Planet& Planet::operator=(const Planet& otherPlanet)
 	}
 
 	this->name = new char[strlen(otherPlanet.name) + 1];
-	CopyText2(this->name, otherPlanet.name);
+	strcpy(this->name, otherPlanet.name);
 	this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
-	CopyText2(this->planetSystem, otherPlanet.planetSystem);
+	strcpy(this->planetSystem, otherPlanet.planetSystem);
 	this->republic = new char[strlen(otherPlanet.republic) + 1];
-	CopyText2(this->republic, otherPlanet.republic);
+	strcpy(this->republic, otherPlanet.republic);
 
 	return *this;
 }
 
 Planet::Planet(const char* otherName, const char* otherPlanetSystem, const char* otherRepublic)
 {
-	CopyText2(this->name, otherName);
-	CopyText2(this->planetSystem, otherPlanetSystem);
-	CopyText2(this->republic, otherRepublic);
+	this->SetName(otherName);
+	this->SetPlanetSystem(otherPlanetSystem);
+	this->SetRepublic(otherRepublic);
 }
 
 Planet::~Planet()
@@ -69,17 +80,35 @@ void Planet::Print()
 
 void Planet::SetName(const char* _name)
 {
-	CopyText2(this->name, _name);
+	if (this->name == nullptr)
+	{
+		delete[] this->name;
+	}
+
+	this->name = new char[strlen(_name) + 1];
+	strcpy(this->name, _name);
 }
 
 void Planet::SetPlanetSystem(const char* _planetSystem)
 {
-	CopyText2(this->planetSystem, _planetSystem);
+	if (this->planetSystem == nullptr)
+	{
+		delete[] this->planetSystem;
+	}
+
+	this->planetSystem = new char[strlen(_planetSystem) + 1];
+	strcpy(this->planetSystem, _planetSystem);
 }
 
 void Planet::SetRepublic(const char* _republic)
 {
-	CopyText2(this->republic, _republic);
+	if (this->republic == nullptr)
+	{
+		delete[] this->republic;
+	}
+
+	this->planetSystem = new char[strlen(_republic) + 1];
+	strcpy(this->republic, _republic);
 }
 
 char* Planet::GetName()

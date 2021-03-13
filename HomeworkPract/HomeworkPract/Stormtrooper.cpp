@@ -1,16 +1,21 @@
 #include "Stormtrooper.hpp"
+#include <cstring>
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#pragma warning(disable:4996)
 
-void CopyText3(char* firstText, const char* secondText)
-{
-	int i;
-
-	for (i = 0; i < strlen(secondText); i++)
-	{
-		firstText[i] = secondText[i];
-	}
-
-	firstText[i] = '\0';
-}
+//void CopyText3(char* firstText, const char* secondText)
+//{
+//	int i;
+//
+//	for (i = 0; i < strlen(secondText); i++)
+//	{
+//		firstText[i] = secondText[i];
+//	}
+//
+//	firstText[i] = '\0';
+//}
 
 char* EnumTocharArray(TrooperRank rank)
 {
@@ -19,37 +24,37 @@ char* EnumTocharArray(TrooperRank rank)
 
 	if (rank == TrooperRank::SquadLeader)
 	{
-		CopyText3(rankType, "SquadLeader");
+		strcpy(rankType, "SquadLeader");
 		return rankType;
 	}
 	else if (rank == TrooperRank::RegimentCommander)
 	{
-		CopyText3(rankType, "RegimentCommander");
+		strcpy(rankType, "RegimentCommander");
 		return rankType;
 	}
 	else if (rank == TrooperRank::PlatoonLeader)
 	{
-		CopyText3(rankType, "PlatoonLeader");
+		strcpy(rankType, "PlatoonLeader");
 		return rankType;
 	}
 	else if (rank == TrooperRank::GeneralOfLegion)
 	{
-		CopyText3(rankType, "GeneralOfLegion");
+		strcpy(rankType, "GeneralOfLegion");
 		return rankType;
 	}
 	else if (rank == TrooperRank::CompanyLeader)
 	{
-		CopyText3(rankType, "CompanyLeader");
+		strcpy(rankType, "CompanyLeader");
 		return rankType;
 	}
 	else if (rank == TrooperRank::BattalionCommander)
 	{
-		CopyText3(rankType, "BattalionCommander");
+		strcpy(rankType, "BattalionCommander");
 		return rankType;
 	}
 	else
 	{
-		CopyText3(rankType, "Trooper");
+		strcpy(rankType, "Trooper");
 		return rankType;
 	}
 
@@ -65,10 +70,10 @@ Stormtrooper::Stormtrooper()
 Stormtrooper::Stormtrooper(const Stormtrooper& other)
 {
 	this->id = new char[strlen(other.id) + 1];
-	CopyText3(this->id, other.id);
+	strcpy(this->id, other.id);
 	this->rank = other.rank;
 	this->type = new char[strlen(other.type) + 1];
-	CopyText3(this->type, other.type);
+	strcpy(this->type, other.type);
 	this->planet = other.planet;
 }
 
@@ -81,10 +86,10 @@ Stormtrooper& Stormtrooper::operator=(const Stormtrooper& other)
 	}
 
 	this->id = new char[strlen(other.id) + 1];
-	CopyText3(this->id, other.id);
+	strcpy(this->id, other.id);
 	this->rank = other.rank;
 	this->type = new char[strlen(other.type) + 1];
-	CopyText3(this->type, other.type);
+	strcpy(this->type, other.type);
 	this->planet = other.planet;
 
 	return *this;
@@ -92,9 +97,9 @@ Stormtrooper& Stormtrooper::operator=(const Stormtrooper& other)
 
 Stormtrooper::Stormtrooper(const char* _id, const TrooperRank _rank, const char* _type, const Planet& _planet)
 {
-	CopyText3(this->id, _id);
+	strcpy(this->id, _id);
 	this->rank = _rank;
-	CopyText3(this->type, _type);
+	strcpy(this->type, _type);
 	this->planet = _planet;
 }
 
@@ -111,7 +116,7 @@ void Stormtrooper::Print()
 
 void Stormtrooper::SetID(const char* _id)
 {
-	CopyText3(this->id, _id);
+	strcpy(this->id, _id);
 }
 
 void Stormtrooper::SetRank(const TrooperRank _rank)
@@ -121,7 +126,7 @@ void Stormtrooper::SetRank(const TrooperRank _rank)
 
 void Stormtrooper::SetType(const char* _type)
 {
-	CopyText3(this->type, _type);
+	strcpy(this->type, _type);
 }
 
 void Stormtrooper::SetPlanet(const Planet& otherPlanet)

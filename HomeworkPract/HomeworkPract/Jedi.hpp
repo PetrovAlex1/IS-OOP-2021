@@ -30,7 +30,7 @@ public:
 
 	Jedi& operator=(const Jedi& otherJedi);
 
-	Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet _planet, const char* _spicies, const char* _militaryRank);
+	Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet& _planet, const char* _spicies, const char* _militaryRank);
 
 	~Jedi();
 

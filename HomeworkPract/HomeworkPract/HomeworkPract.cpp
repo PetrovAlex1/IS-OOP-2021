@@ -5,7 +5,9 @@
 
 int main()
 {
-	Planet Mars{"Mars", "Milky way", "Republic of Macedonia"};
-	Jedi Anakin{ "Anakin", JediRank::GrandMaster, 12.1f, Mars, "Spicies", "Comander" };
-	Anakin.Print();
+	Planet Mars;
+	Mars.SetName("Mars");
+	Mars.SetPlanetSystem("Milky way");
+	Mars.SetRepublic("Marcy");
+	Mars.Print();
 }

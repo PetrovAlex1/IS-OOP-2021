@@ -1,16 +1,21 @@
 #include "Jedi.hpp"
+#include <cstring>
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#pragma warning(disable:4996)
 
-void CopyText1(char* firstText, const char* secondText)
-{
-	int i;
-
-	for (i = 0; i < strlen(secondText); i++)
-	{
-		firstText[i] = secondText[i];
-	}
-
-	firstText[i] = '\0';
-}
+//void CopyText1(char* firstText, const char* secondText)
+//{
+//	int i;
+//
+//	for (i = 0; i < strlen(secondText); i++)
+//	{
+//		firstText[i] = secondText[i];
+//	}
+//
+//	firstText[i] = '\0';
+//}
 
 char* EnumTocharArray(JediRank rank)
 {
@@ -18,17 +23,17 @@ char* EnumTocharArray(JediRank rank)
 
 	if (rank == JediRank::GrandMaster)
 	{
-		CopyText1(rankType, "GrandMaster");
+		strcpy(rankType, "GrandMaster");
 		return rankType;
 	}
 	else if (rank == JediRank::Master)
 	{
-		CopyText1(rankType, "Master");
+		strcpy(rankType, "Master");
 		return rankType;
 	}
 	else
 	{
-		CopyText1(rankType, "Padawan");
+		strcpy(rankType, "Padawan");
 		return rankType;
 	}
 }
@@ -46,13 +51,13 @@ Jedi::Jedi()
 Jedi::Jedi(const Jedi& otherJedi)
 {
 	this->name = new char[strlen(otherJedi.name) + 1];
-	CopyText1(this->name, otherJedi.name);
+	strcpy(this->name, otherJedi.name);
 	this->rank = otherJedi.rank;
 	this->planet = otherJedi.planet;
 	this->spicies = new char[strlen(otherJedi.spicies) + 1];
-	CopyText1(this->spicies, otherJedi.spicies);
+	strcpy(this->spicies, otherJedi.spicies);
 	this->militaryRank = new char[strlen(otherJedi.militaryRank) + 1];
-	CopyText1(this->militaryRank, otherJedi.militaryRank);
+	strcpy(this->militaryRank, otherJedi.militaryRank);
 }
 
 Jedi& Jedi::operator=(const Jedi& otherJedi)
@@ -67,25 +72,25 @@ Jedi& Jedi::operator=(const Jedi& otherJedi)
 	}
 
 	this->name = new char[strlen(otherJedi.name) + 1];
-	CopyText1(this->name, otherJedi.name);
+	strcpy(this->name, otherJedi.name);
 	this->rank = otherJedi.rank;
 	this->planet = otherJedi.planet;
 	this->spicies = new char[strlen(otherJedi.spicies) + 1];
-	CopyText1(this->spicies, otherJedi.spicies);
+	strcpy(this->spicies, otherJedi.spicies);
 	this->militaryRank = new char[strlen(otherJedi.militaryRank) + 1];
-	CopyText1(this->militaryRank, otherJedi.militaryRank);
+	strcpy(this->militaryRank, otherJedi.militaryRank);
 
 	return *this;
 }
 
-Jedi::Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet _planet, const char* _spicies, const char* _militaryRank)
+Jedi::Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet& _planet, const char* _spicies, const char* _militaryRank)
 {
-	CopyText1(this->name, _name);
+	strcpy(this->name, _name);
 	this->rank = _rank;
 	this->midichlorian = _midichlorian;
 	this->planet = _planet;
-	CopyText1(this->spicies, _spicies);
-	CopyText1(this->militaryRank, _militaryRank);
+	strcpy(this->spicies, _spicies);
+	strcpy(this->militaryRank, _militaryRank);
 }
 
 Jedi::~Jedi()
@@ -108,7 +113,7 @@ void Jedi::Print()
 
 void Jedi::SetName(const char* _name)
 {
-	CopyText1(this->name, _name);
+	strcpy(this->name, _name);
 }
 
 void Jedi::SetRank(const JediRank _rank)
@@ -128,12 +133,12 @@ void Jedi::SetPlanet(const Planet _planet)
 
 void Jedi::SetSpicies(const char* _spicies)
 {
-	CopyText1(this->spicies, _spicies);
+	strcpy(this->spicies, _spicies);
 }
 
 void Jedi::SetMilitaryRank(const char* _militaryRank)
 {
-	CopyText1(this->militaryRank, _militaryRank);
+	strcpy(this->militaryRank, _militaryRank);
 }
 
 char* Jedi::GetName()
