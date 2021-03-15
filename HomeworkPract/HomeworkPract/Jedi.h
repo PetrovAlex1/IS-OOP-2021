@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "Planet.hpp"
+#include "Planet.h"
 
 enum class JediRank
 {
@@ -8,8 +8,6 @@ enum class JediRank
 	Master,
 	GrandMaster
 };
-
-void CopyText1(char* firstText, const char* secondText);
 
 char* EnumTocharArray(JediRank rank);
 

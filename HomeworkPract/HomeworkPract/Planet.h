@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 
-void CopyText2(char* firstText, const char* secondText);
-
 class Planet
 {
 private:

@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "Planet.hpp"
+#include "Planet.h"
 
 enum class TrooperRank
 {
@@ -12,8 +12,6 @@ enum class TrooperRank
 	RegimentCommander,
 	GeneralOfLegion
 };
-
-void CopyText(char* firstText, const char* secondText);
 
 char* EnumTocharArray(TrooperRank rank);
 

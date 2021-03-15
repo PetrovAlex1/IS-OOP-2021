@@ -29,13 +29,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Jedi.hpp">
+    <ClInclude Include="Jedi.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Planet.hpp">
+    <ClInclude Include="Planet.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Stormtrooper.hpp">
+    <ClInclude Include="Stormtrooper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -145,9 +145,9 @@
     <ClCompile Include="Stormtrooper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Jedi.hpp" />
-    <ClInclude Include="Planet.hpp" />
-    <ClInclude Include="Stormtrooper.hpp" />
+    <ClInclude Include="Jedi.h" />
+    <ClInclude Include="Planet.h" />
+    <ClInclude Include="Stormtrooper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

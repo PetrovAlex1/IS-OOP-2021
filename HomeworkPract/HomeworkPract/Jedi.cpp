@@ -1,26 +1,12 @@
-#include "Jedi.hpp"
+#include "Jedi.h"
 #include <cstring>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
 
-//void CopyText1(char* firstText, const char* secondText)
-//{
-//	int i;
-//
-//	for (i = 0; i < strlen(secondText); i++)
-//	{
-//		firstText[i] = secondText[i];
-//	}
-//
-//	firstText[i] = '\0';
-//}
-
-char* EnumTocharArray(JediRank rank)
+char* EnumTocharArray(JediRank rank, char* rankType)
 {
-	char rankType[16];
-
 	if (rank == JediRank::GrandMaster)
 	{
 		strcpy(rankType, "GrandMaster");
@@ -37,7 +23,6 @@ char* EnumTocharArray(JediRank rank)
 		return rankType;
 	}
 }
-
 
 Jedi::Jedi()
 {
@@ -85,12 +70,12 @@ Jedi& Jedi::operator=(const Jedi& otherJedi)
 
 Jedi::Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet& _planet, const char* _spicies, const char* _militaryRank)
 {
-	strcpy(this->name, _name);
-	this->rank = _rank;
-	this->midichlorian = _midichlorian;
-	this->planet = _planet;
-	strcpy(this->spicies, _spicies);
-	strcpy(this->militaryRank, _militaryRank);
+	this->SetName(_name);
+	this->SetRank(_rank);
+	this->SetMidichlorian(_midichlorian);
+	this->SetPlanet(_planet);
+	this->SetSpicies(_spicies);
+	this->SetMilitaryRank(_militaryRank);
 }
 
 Jedi::~Jedi()
@@ -103,16 +88,27 @@ Jedi::~Jedi()
 
 void Jedi::Print()
 {
+	char* rankType = new char[32];
+	rankType = EnumTocharArray(this->rank, rankType);
+
 	std::cout << "Jedi " << this->name <<
-		"with rank: " << EnumTocharArray(this->rank) <<
+		"with rank: " << rankType <<
 		" with midichlorian: " << this->midichlorian <<
 		" from " << this->planet.GetName() <<
-		"with spicies: " << this->spicies <<
+		" with spicies: " << this->spicies <<
 		" with militaryRank: " << this->militaryRank << std::endl;
+
+	delete[] rankType;
 }
 
 void Jedi::SetName(const char* _name)
 {
+	if (this->name == nullptr)
+	{
+		delete[] this->name;
+	}
+
+	this->name = new char[strlen(_name) + 1];
 	strcpy(this->name, _name);
 }
 
@@ -133,11 +129,23 @@ void Jedi::SetPlanet(const Planet _planet)
 
 void Jedi::SetSpicies(const char* _spicies)
 {
+	if (this->spicies == nullptr)
+	{
+		delete[] this->spicies;
+	}
+
+	this->spicies = new char[strlen(_spicies) + 1];
 	strcpy(this->spicies, _spicies);
 }
 
 void Jedi::SetMilitaryRank(const char* _militaryRank)
 {
+	if (this->militaryRank == nullptr)
+	{
+		delete[] this->militaryRank;
+	}
+
+	this->militaryRank = new char[strlen(_militaryRank) + 1];
 	strcpy(this->militaryRank, _militaryRank);
 }
 

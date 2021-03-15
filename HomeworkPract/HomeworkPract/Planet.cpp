@@ -1,27 +1,9 @@
-#include "Planet.hpp"
+#include "Planet.h"
 #include <cstring>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
-
-//void CopyText2(char* firstText, const char* secondText)
-//{
-//	int i;
-//	if (firstText == nullptr)
-//	{
-//		delete[] firstText;
-//	}
-//
-//	firstText = new char[strlen(secondText) + 1];
-//
-//	for (i = 0; i < strlen(secondText); i++)
-//	{
-//		firstText[i] = secondText[i];
-//	}
-//
-//	firstText[i] = '\0';
-//}
 
 Planet::Planet()
 {
@@ -107,7 +89,7 @@ void Planet::SetRepublic(const char* _republic)
 		delete[] this->republic;
 	}
 
-	this->planetSystem = new char[strlen(_republic) + 1];
+	this->republic = new char[strlen(_republic) + 1];
 	strcpy(this->republic, _republic);
 }
 

@@ -1,27 +1,12 @@
-#include "Stormtrooper.hpp"
+#include "Stormtrooper.h"
 #include <cstring>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
 
-//void CopyText3(char* firstText, const char* secondText)
-//{
-//	int i;
-//
-//	for (i = 0; i < strlen(secondText); i++)
-//	{
-//		firstText[i] = secondText[i];
-//	}
-//
-//	firstText[i] = '\0';
-//}
-
-char* EnumTocharArray(TrooperRank rank)
+char* EnumTocharArray(TrooperRank rank, char* rankType)
 {
-
-	char rankType[16];
-
 	if (rank == TrooperRank::SquadLeader)
 	{
 		strcpy(rankType, "SquadLeader");
@@ -97,10 +82,10 @@ Stormtrooper& Stormtrooper::operator=(const Stormtrooper& other)
 
 Stormtrooper::Stormtrooper(const char* _id, const TrooperRank _rank, const char* _type, const Planet& _planet)
 {
-	strcpy(this->id, _id);
-	this->rank = _rank;
-	strcpy(this->type, _type);
-	this->planet = _planet;
+	this->SetID(_id);
+	this->SetRank(_rank);
+	this->SetType(_type);
+	this->SetPlanet(_planet);
 }
 
 Stormtrooper::~Stormtrooper()
@@ -111,11 +96,21 @@ Stormtrooper::~Stormtrooper()
 
 void Stormtrooper::Print()
 {
-	std::cout << "Stormtrooper with id: " << this->id << " rank: " << EnumTocharArray(this->rank) << " type: " << this->type << " from " << this->planet.GetName() << std::endl;
+	char* rankType = new char[32];
+	rankType = EnumTocharArray(this->rank, rankType);
+	std::cout << "Stormtrooper with id: " << this->id << " rank: " << rankType << " type: " << this->type << " from " << this->planet.GetName() << std::endl;
+
+	delete[] rankType;
 }
 
 void Stormtrooper::SetID(const char* _id)
 {
+	if (this->id == nullptr)
+	{
+		delete[] this->id;
+	}
+
+	this->id = new char[strlen(_id) + 1];
 	strcpy(this->id, _id);
 }
 
@@ -126,6 +121,12 @@ void Stormtrooper::SetRank(const TrooperRank _rank)
 
 void Stormtrooper::SetType(const char* _type)
 {
+	if (this->type == nullptr)
+	{
+		delete[] this->type;
+	}
+
+	this->type = new char[strlen(_type) + 1];
 	strcpy(this->type, _type);
 }
 
