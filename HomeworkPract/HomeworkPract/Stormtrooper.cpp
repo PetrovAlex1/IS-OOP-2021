@@ -17,6 +17,21 @@ char* EnumTocharArray(TrooperRank rank, char* rankType)
 		strcpy(rankType, "RegimentCommander");
 		return rankType;
 	}
+	else if (rank == TrooperRank::Commander)
+	{
+		strcpy(rankType, "Commander");
+		return rankType;
+	}
+	else if (rank == TrooperRank::Enlisted)
+	{
+		strcpy(rankType, "Enlisted");
+		return rankType;
+	}
+	else if (rank == TrooperRank::Sergeant)
+	{
+		strcpy(rankType, "Sergeant");
+		return rankType;
+	}
 	else if (rank == TrooperRank::PlatoonLeader)
 	{
 		strcpy(rankType, "PlatoonLeader");
@@ -135,22 +150,73 @@ void Stormtrooper::SetPlanet(const Planet& otherPlanet)
 	this->planet = otherPlanet;
 }
 
-char* Stormtrooper::GetID()
+char* Stormtrooper::GetID() const
 {
 	return this->id;
 }
 
-TrooperRank Stormtrooper::GetRank()
+TrooperRank Stormtrooper::GetRank() const
 {
 	return this->rank;
 }
 
-char* Stormtrooper::GetType()
+char* Stormtrooper::GetType() const
 {
 	return this->type;
 }
 
-Planet Stormtrooper::GetPlanet()
+Planet Stormtrooper::GetPlanet() const
 {
 	return this->planet;
+}
+
+std::ostream& operator<<(std::ostream& out, const Stormtrooper& trooper)
+{
+	out << "Stormtrooper with id: " << trooper.GetID()
+		<< " type: " << trooper.GetType()
+		<< " from " << std::endl << trooper.GetPlanet().GetName()
+		<< " rank: ";
+
+	if (trooper.GetRank() == TrooperRank::SquadLeader)
+	{
+		out << "SquadLeader" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::RegimentCommander)
+	{
+		out << "RegimentCommander" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::Commander)
+	{
+		out << "Commander" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::Enlisted)
+	{
+		out << "Enlisted" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::Sergeant)
+	{
+		out << "Sergeant" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::PlatoonLeader)
+	{
+		out << "PlatoonLeader" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::GeneralOfLegion)
+	{
+		out << "GeneralOfLegion" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::CompanyLeader)
+	{
+		out << "CompanyLeader" << std::endl;
+	}
+	else if (trooper.GetRank() == TrooperRank::BattalionCommander)
+	{
+		out << "BattalionCommander" << std::endl;
+	}
+	else
+	{
+		out << "Trooper" << std::endl;
+	}
+
+	return out;
 }

@@ -145,6 +145,7 @@
     <ClCompile Include="Stormtrooper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonFunctions.h" />
     <ClInclude Include="Jedi.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="Stormtrooper.h" />

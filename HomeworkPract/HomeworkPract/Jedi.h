@@ -6,7 +6,8 @@ enum class JediRank
 {
 	Padawan,
 	Master,
-	GrandMaster
+	GrandMaster,
+	Knight
 };
 
 char* EnumTocharArray(JediRank rank);
@@ -46,15 +47,17 @@ public:
 
 	void SetMilitaryRank(const char* _militaryRank);
 
-	char* GetName();
+	char* GetName() const;
 
-	JediRank GetRank();
+	JediRank GetRank() const;
 
-	float GetMidichlorian();
+	float GetMidichlorian() const;
 
-	Planet GetPlanet();
+	Planet GetPlanet() const;
 
-	char* GetSpicies();
+	char* GetSpicies() const;
 
-	char* GetMilitaryRank();
+	char* GetMilitaryRank() const;
+
+	friend std::ostream& operator<<(std::ostream& out, const Jedi& jedi);
 };
