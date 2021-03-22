@@ -63,4 +63,7 @@ public:
 
 template<class T>
 
-void PrintInfo(const T object);
+void PrintInfo(const T object)
+{
+	std::cout << object;
+}

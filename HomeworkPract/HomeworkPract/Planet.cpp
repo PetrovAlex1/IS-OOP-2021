@@ -211,7 +211,7 @@ PlanetType Planet::GetPlanetType() const
 	return this->planetType;
 }
 
-std::ostream& operator<<(std::ostream out, const Planet& planet)
+std::ostream& operator<<(std::ostream& out, const Planet& planet)
 {
 	out << "Name: " << planet.GetName()
 		<< " from " << planet.GetPlanetSystem()
@@ -284,11 +284,4 @@ std::ostream& operator<<(std::ostream out, const Planet& planet)
 	}
 
 	return out;
-}
-
-template<class T>
-
-void PrintInfo(const T object)
-{
-	std::cout << object;
 }
