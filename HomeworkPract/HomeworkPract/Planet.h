@@ -1,12 +1,33 @@
 #pragma once
 #include <iostream>
 
+enum class PlanetType
+{
+	ChthonianPlanet,
+	CarbonPlanet,
+	CorelessPlanet,
+	DesertPlanet,
+	GasDwarf,
+	GasGiant,
+	HeliumPlanet,
+	IceGiant,
+	IcePlanet,
+	IronPlanet,
+	LavaPlanet,
+	OceanPlanet,
+	ProtoPlanet,
+	PuffyPlanet,
+	SilicatePlanet,
+	TerrestricalPlanet
+};
+
 class Planet
 {
 private:
 	char* name;
 	char* planetSystem;
 	char* republic;
+	PlanetType planetType;
 public:
 
 	Planet();
@@ -15,7 +36,7 @@ public:
 
 	Planet& operator=(const Planet& otherPlanet);
 
-	Planet(const char* otherName, const char* otherPlanetSystem, const char* otherRepublic);
+	Planet(const char* otherName, const char* otherPlanetSystem, const char* otherRepublic, const PlanetType _planetType);
 
 	~Planet();
 
@@ -27,9 +48,19 @@ public:
 
 	void SetRepublic(const char* _republic);
 
-	char* GetName();
+	void SetPlanetType(PlanetType _planetType);
 
-	char* GetPlanetSystem();
+	char* GetName() const;
 
-	char* GetRepublic();
+	char* GetPlanetSystem() const;
+
+	char* GetRepublic() const;
+
+	PlanetType GetPlanetType() const;
+
+	friend std::ostream& operator<<(std::ostream& out, const Planet& planet);
 };
+
+template<class T>
+
+void PrintInfo(const T object);

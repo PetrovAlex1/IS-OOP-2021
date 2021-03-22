@@ -38,5 +38,8 @@
     <ClInclude Include="Stormtrooper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="CommonFunctions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

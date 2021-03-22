@@ -10,7 +10,10 @@ enum class TrooperRank
 	CompanyLeader,
 	BattalionCommander,
 	RegimentCommander,
-	GeneralOfLegion
+	GeneralOfLegion,
+	Commander,
+	Enlisted,
+	Sergeant
 };
 
 char* EnumTocharArray(TrooperRank rank);
@@ -44,11 +47,13 @@ public:
 
 	void SetPlanet(const Planet& otherPlanet);
 
-	char* GetID();
+	char* GetID() const;
 
-	TrooperRank GetRank();
+	TrooperRank GetRank() const;
 
-	char* GetType();
+	char* GetType() const;
 
-	Planet GetPlanet();
+	Planet GetPlanet() const;
+
+	friend std::ostream& operator<<(std::ostream& out, const Stormtrooper& trooper);
 };

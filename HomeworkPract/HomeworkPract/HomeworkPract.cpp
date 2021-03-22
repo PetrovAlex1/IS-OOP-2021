@@ -5,5 +5,6 @@
 
 int main()
 {
-
+	Planet Mars{ "Mars", "Mily way", "Republica", PlanetType::PuffyPlanet };
+	PrintInfo(Mars);
 }

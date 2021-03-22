@@ -149,32 +149,61 @@ void Jedi::SetMilitaryRank(const char* _militaryRank)
 	strcpy(this->militaryRank, _militaryRank);
 }
 
-char* Jedi::GetName()
+char* Jedi::GetName() const
 {
 	return this->name;
 }
 
-JediRank Jedi::GetRank()
+JediRank Jedi::GetRank() const
 {
 	return this->rank;
 }
 
-float Jedi::GetMidichlorian()
+float Jedi::GetMidichlorian() const
 {
 	return this->midichlorian;
 }
 
-Planet Jedi::GetPlanet()
+Planet Jedi::GetPlanet() const
 {
 	return this->planet;
 }
 
-char* Jedi::GetSpicies()
+char* Jedi::GetSpicies() const
 {
 	return this->spicies;
 }
 
-char* Jedi::GetMilitaryRank()
+char* Jedi::GetMilitaryRank() const
 {
 	return this->militaryRank;
+}
+
+std::ostream& operator<<(std::ostream& out, const Jedi& jedi)
+{
+	out << "Jedi " << jedi.GetName()
+		<< " with midichlorian: " << jedi.GetMidichlorian()
+		<< " from " << std::endl << jedi.GetPlanet().GetName()
+		<< " with spicies: " << jedi.GetSpicies()
+		<< " with militaryRank: " << jedi.GetMilitaryRank() << std::endl
+		<< " with rank: ";
+
+	if (jedi.GetRank() == JediRank::GrandMaster)
+	{
+		out << "GrandMaster" << std::endl;
+	}
+	else if (jedi.GetRank() == JediRank::Master)
+	{
+		out << "Master" << std::endl;
+	}
+	else if (jedi.GetRank() == JediRank::Knight)
+	{
+		out << "knight" << std::endl;
+	}
+	else
+	{
+		out << "Padawan" << std::endl;
+	}
+
+	return out;
 }
