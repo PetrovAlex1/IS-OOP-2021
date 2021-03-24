@@ -29,17 +29,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Jedi.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Planet.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jedi.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Stormtrooper.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommonFunctions.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="BattleShip.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

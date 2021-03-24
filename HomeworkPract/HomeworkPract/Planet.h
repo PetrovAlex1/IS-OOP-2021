@@ -59,11 +59,17 @@ public:
 	PlanetType GetPlanetType() const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Planet& planet);
+
+	friend std::istream& operator>>(std::istream& in, Planet& planet);
+
+	void ReadFromFile(const char* fileName, int& position);
+
+	void WriteOnFilePlanet(const char* fileName);
 };
 
 template<class T>
 
-void PrintInfo(const T object)
+void PrintInfo(const T& object)
 {
 	std::cout << object;
 }

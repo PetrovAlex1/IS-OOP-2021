@@ -1,9 +1,114 @@
 #include "Planet.h"
 #include <cstring>
+#include <fstream>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
+
+int CountSymbols2(char* text)
+{
+	int counter = 0;
+	int i = 0;
+
+	while (text[i] != '\0')
+	{
+		counter++;
+		i++;
+	}
+
+	return counter;
+}
+
+bool StrCmp2(char* text1, const char* text2)
+{
+	int i = 0;
+
+	while (text1[i] != '\0')
+	{
+		if (text1[i] != text2[i])
+		{
+			return false;
+		}
+
+		i++;
+	}
+
+	return true;
+}
+
+PlanetType CharArrayToEnumPlanet(char* type)
+{
+	if (type[0] >= 97 && type[0] <= 122)
+	{
+		type[0] -= 'a' - 'A';
+	}
+
+	if (StrCmp2(type, "CarbonPlanet"))
+	{
+		return PlanetType::CarbonPlanet;
+	}
+	else if (StrCmp2(type, "CarbonPlanet"))
+	{
+		return PlanetType::ChthonianPlanet;
+	}
+	else if (StrCmp2(type, "CorelessPlanet"))
+	{
+		return PlanetType::CorelessPlanet;
+	}
+	else if (StrCmp2(type, "DesertPlanet"))
+	{
+		return PlanetType::DesertPlanet;
+	}
+	else if (StrCmp2(type, "GasDwarf"))
+	{
+		return PlanetType::GasDwarf;
+	}
+	else if (StrCmp2(type, "GasGiant"))
+	{
+		return PlanetType::GasGiant;
+	}
+	else if (StrCmp2(type, "HeliumPlanet"))
+	{
+		return PlanetType::HeliumPlanet;
+	}
+	else if (StrCmp2(type, "IceGiant"))
+	{
+		return PlanetType::IceGiant;
+	}
+	else if (StrCmp2(type, "IcePlanet"))
+	{
+		return PlanetType::IcePlanet;
+	}
+	else if (StrCmp2(type, "IronPlanet"))
+	{
+		return PlanetType::IronPlanet;
+	}
+	else if (StrCmp2(type, "LavaPlanet"))
+	{
+		return PlanetType::LavaPlanet;
+	}
+	else if (StrCmp2(type, "OceanPlanet"))
+	{
+		return PlanetType::OceanPlanet;
+	}
+	else if (StrCmp2(type, "ProtoPlanet"))
+	{
+		return PlanetType::ProtoPlanet;
+	}
+	else if (StrCmp2(type, "PuffyPlanet"))
+	{
+		return PlanetType::PuffyPlanet;
+	}
+	else if (StrCmp2(type, "SilicatePlanet"))
+	{
+		return PlanetType::SilicatePlanet;
+	}
+	else if (StrCmp2(type, "TerrestricalPlanet"))
+	{
+		return PlanetType::TerrestricalPlanet;
+	}
+}
 
 char* EnumToCharArray(PlanetType type, char* planetType)
 {
@@ -146,9 +251,9 @@ Planet::~Planet()
 void Planet::Print()
 {
 	char* type = new char[16];
-	type = EnumToCharArray(this->planetType, type);
+	type = EnumToCharArray(this->GetPlanetType(), type);
 
-	std::cout << "Planet " << this->name << " from " << this->planetSystem << " belongs to republic " << this->republic << "Planet Type:: " << type << std::endl;
+	std::cout << "Planet " << this->GetName() << " from " << this->GetPlanetSystem() << " belongs to republic " << this->GetRepublic() << " planet type " << type << std::endl;
 
 	delete[] type;
 }
@@ -284,4 +389,86 @@ std::ostream& operator<<(std::ostream& out, const Planet& planet)
 	}
 
 	return out;
+}
+
+std::istream& operator>>(std::istream& in, Planet& planet)
+{
+	std::cout << "Enter planet name: ";
+	char name[32];
+	in >> name;
+	planet.SetName(name);
+
+	std::cout << "Enter planet system: ";
+	char planetSystem[32];
+	in >> planetSystem;
+	planet.SetPlanetSystem(planetSystem);
+
+	std::cout << "Enter republic: ";
+	char republic[32];
+	in >> republic;
+	planet.SetRepublic(republic);
+
+	std::cout << "Enter planet type: ";
+	char planetType[32];
+	in >> planetType;
+	planet.SetPlanetType(CharArrayToEnumPlanet(planetType));
+
+	return in;
+}
+
+void Planet::ReadFromFile(const char* fileName, int& position)
+{
+	std::ifstream input;
+	input.open(fileName);
+	char buffer[64];
+	int i = 0;
+	input.seekg(position, std::ios::cur);
+
+	while (input.getline(buffer, 64, '\n'))
+	{
+		if (i == 4 && i > 0)
+		{
+			break;
+		}
+
+		i++;
+		position += CountSymbols2(buffer) + 2;
+
+		if (i == 1)
+		{
+			this->SetName(buffer);
+		}
+		else if (i == 2)
+		{
+			this->SetPlanetSystem(buffer);
+		}
+		else if (i == 3)
+		{
+			this->SetRepublic(buffer);
+		}
+		else
+		{
+			this->SetPlanetType(CharArrayToEnumPlanet(buffer));
+		}
+	}
+
+	position += 2;
+	input.close();
+}
+
+void Planet::WriteOnFilePlanet(const char* fileName)
+{
+	std::ofstream myFile(fileName, std::ios::app);
+
+	myFile << this->GetName() << std::endl;
+	myFile << this->GetPlanetSystem() << std::endl;
+	myFile << this->GetRepublic() << std::endl;
+
+	char* type = new char[16];
+	type = EnumToCharArray(this->GetPlanetType(), type);
+	myFile << type << std::endl;
+	myFile << std::endl;
+
+	delete[] type;
+	myFile.close();
 }

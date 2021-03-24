@@ -60,4 +60,10 @@ public:
 	char* GetMilitaryRank() const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Jedi& jedi);
+
+	friend std::istream& operator>>(std::istream& in, Jedi& jedi);
+
+	void ReadFromFile(const char* fileName, int& positions);
+
+	void WriteOnFileJedi(const char* fileName);
 };

@@ -1,9 +1,79 @@
 #include "Jedi.h"
+#include <fstream>
 #include <cstring>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
+
+int ParseCharToInt1(char* text)
+{
+	int number = 0;
+	int d = 10;
+
+	for (int i = 0; text[i] != '\0'; i++)
+	{
+		number = number * d + text[i] - 48;
+	}
+
+	return number;
+}
+
+int CountSymbols3(char* text)
+{
+	int counter = 0;
+	int i = 0;
+
+	while (text[i] != '\0')
+	{
+		counter++;
+		i++;
+	}
+
+	return counter;
+}
+
+bool StrCmp3(char* text1, const char* text2)
+{
+	int i = 0;
+
+	while (text1[i] != '\0')
+	{
+		if (text1[i] != text2[i])
+		{
+			return false;
+		}
+
+		i++;
+	}
+
+	return true;
+}
+
+JediRank CharArrayToEnumJedi(char* rank)
+{
+	if (rank[0] >= 97 && rank[0] <= 122)
+	{
+		rank[0] -= 'a' - 'A';
+	}
+
+	if (StrCmp3(rank, "Knight"))
+	{
+		return JediRank::Knight;
+	}
+	else if (StrCmp3(rank, "Master"))
+	{
+		return JediRank::Master;
+	}
+	else if (StrCmp3(rank, "GrandMaster"))
+	{
+		return JediRank::GrandMaster;
+	}
+	else if (StrCmp3(rank, "Padawan"))
+	{
+		return JediRank::Padawan;
+	}
+}
 
 char* EnumTocharArray(JediRank rank, char* rankType)
 {
@@ -80,23 +150,23 @@ Jedi::Jedi(const char* _name, const JediRank _rank, const float _midichlorian, c
 
 Jedi::~Jedi()
 {
-	delete[] name;
-	midichlorian = 0.0;
-	delete[] spicies;
-	delete[] militaryRank;
+	delete[] this->name;
+	this->midichlorian = 0.0;
+	delete[] this->spicies;
+	delete[] this->militaryRank;
 }
 
 void Jedi::Print()
 {
 	char* rankType = new char[32];
-	rankType = EnumTocharArray(this->rank, rankType);
+	rankType = EnumTocharArray(this->GetRank(), rankType);
 
-	std::cout << "Jedi " << this->name <<
+	std::cout << "Jedi " << this->GetName() <<
 		"with rank: " << rankType <<
-		" with midichlorian: " << this->midichlorian <<
-		" from " << this->planet.GetName() <<
-		" with spicies: " << this->spicies <<
-		" with militaryRank: " << this->militaryRank << std::endl;
+		" with midichlorian: " << this->GetMidichlorian() <<
+		" from " << this->GetPlanet().GetName() <<
+		" with spicies: " << this->GetSpicies() <<
+		" with militaryRank: " << this->GetMilitaryRank() << std::endl;
 
 	delete[] rankType;
 }
@@ -206,4 +276,107 @@ std::ostream& operator<<(std::ostream& out, const Jedi& jedi)
 	}
 
 	return out;
+}
+
+std::istream& operator>>(std::istream& in, Jedi& jedi)
+{
+	std::cout << "Enter jedi name: ";
+	char name[32];
+	in >> name;
+	jedi.SetName(name);
+
+	std::cout << "Enter rank: ";
+	char rank[32];
+	in >> rank;
+	jedi.SetRank(CharArrayToEnumJedi(rank));
+
+	std::cout << "Enter midichlorian: ";
+	float midichlorian;
+	in >> midichlorian;
+	jedi.SetMidichlorian(midichlorian);
+
+	std::cout << "Enter the information about the planet: " << std::endl;
+	Planet planet;
+	in >> planet;
+	jedi.SetPlanet(planet);
+
+	std::cout << "Enter spicies: ";
+	char spicies[32];
+	in >> spicies;
+	jedi.SetSpicies(spicies);
+
+	std::cout << "Enter military rank: ";
+	char militaryRank[32];
+	in >> militaryRank;
+	jedi.SetMilitaryRank(militaryRank);
+
+	return in;
+}
+
+void Jedi::ReadFromFile(const char* fileName, int& position)
+{
+	std::ifstream input;
+	input.open(fileName);
+	char buffer[64];
+	int i = 0;
+	input.seekg(position, std::ios::cur);
+
+	while (input.getline(buffer, 64, '\n'))
+	{
+		if (i == 6 && i > 0)
+		{
+			break;
+		}
+
+		i++;
+		position += CountSymbols3(buffer) + 2;
+
+		if (i == 1)
+		{
+			this->SetName(buffer);
+		}
+		else if (i == 2)
+		{
+			this->SetRank(CharArrayToEnumJedi(buffer));
+		}
+		else if (i == 3)
+		{
+			this->SetMidichlorian(ParseCharToInt1(buffer));
+		}
+		else if (i == 4)
+		{
+			this->planet.SetName(buffer);
+		}
+		else if (i == 5)
+		{
+			this->SetSpicies(buffer);
+		}
+		else
+		{
+			this->SetMilitaryRank(buffer);
+		}
+	}
+
+	position += 2;
+	input.close();
+}
+
+void Jedi::WriteOnFileJedi(const char* fileName)
+{
+	std::ofstream myFile(fileName, std::ios::app);
+
+	myFile << this->GetName() << std::endl;
+
+	char* rankType = new char[32];
+	rankType = EnumTocharArray(this->GetRank(), rankType);
+	myFile << rankType << std::endl;
+
+	myFile << this->GetMidichlorian() << std::endl;
+	myFile << this->GetPlanet().GetName() << std::endl;
+	myFile << this->GetSpicies() << std::endl;
+	myFile << this->GetMilitaryRank() << std::endl;
+	myFile << std::endl;
+
+	delete[] rankType;
+	myFile.close();
 }

@@ -1,9 +1,90 @@
 #include "Stormtrooper.h"
+#include <fstream>
 #include <cstring>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
+
+int CountSymbols1(char* text)
+{
+	int counter = 0;
+	int i = 0;
+
+	while (text[i] != '\0')
+	{
+		counter++;
+		i++;
+	}
+
+	return counter;
+}
+
+bool StrCmp1(char* text1, const char* text2)
+{
+	int i = 0;
+
+	while (text1[i] != '\0')
+	{
+		if (text1[i] != text2[i])
+		{
+			return false;
+		}
+
+		i++;
+	}
+
+	return true;
+}
+
+TrooperRank CharArrayToEnumTrooper(char* rank)
+{
+	if (rank[0] >= 97 && rank[0] <= 122)
+	{
+		rank[0] -= 'a' - 'A';
+	}
+
+	if (StrCmp1(rank, "SquadLeader"))
+	{
+		return TrooperRank::SquadLeader;
+	}
+	else if (StrCmp1(rank, "RegimentCommander"))
+	{
+		return TrooperRank::RegimentCommander;
+	}
+	else if (StrCmp1(rank, "Commander"))
+	{
+		return TrooperRank::Commander;
+	}
+	else if (StrCmp1(rank, "Enlisted"))
+	{
+		return TrooperRank::Enlisted;
+	}
+	else if (StrCmp1(rank, "Sergeant"))
+	{
+		return TrooperRank::Sergeant;
+	}
+	else if (StrCmp1(rank, "PlatoonLeader"))
+	{
+		return TrooperRank::PlatoonLeader;
+	}
+	else if (StrCmp1(rank, "GeneralOfLegion"))
+	{
+		return TrooperRank::GeneralOfLegion;
+	}
+	else if (StrCmp1(rank, "CompanyLeader"))
+	{
+		return TrooperRank::CompanyLeader;
+	}
+	else if (StrCmp1(rank, "BattalionCommander"))
+	{
+		return TrooperRank::BattalionCommander;
+	}
+	else
+	{
+		return TrooperRank::Trooper;
+	}
+}
 
 char* EnumTocharArray(TrooperRank rank, char* rankType)
 {
@@ -112,8 +193,8 @@ Stormtrooper::~Stormtrooper()
 void Stormtrooper::Print()
 {
 	char* rankType = new char[32];
-	rankType = EnumTocharArray(this->rank, rankType);
-	std::cout << "Stormtrooper with id: " << this->id << " rank: " << rankType << " type: " << this->type << " from " << this->planet.GetName() << std::endl;
+	rankType = EnumTocharArray(this->GetRank(), rankType);
+	std::cout << "Stormtrooper with id: " << this->GetID() << " rank: " << rankType << " type: " << this->GetType() << " from " << this->planet.GetName() << std::endl;
 
 	delete[] rankType;
 }
@@ -219,4 +300,87 @@ std::ostream& operator<<(std::ostream& out, const Stormtrooper& trooper)
 	}
 
 	return out;
+}
+
+std::istream& operator>>(std::istream& in, Stormtrooper& trooper)
+{
+	std::cout << "Enter trooper id: ";
+	char id[8];
+	in >> id;
+	trooper.SetID(id);
+
+	std::cout << "Enter rank: ";
+	char rank[32];
+	in >> rank;
+	trooper.SetRank(CharArrayToEnumTrooper(rank));
+
+	std::cout << "Enter type: ";
+	char type[32];
+	in >> type;
+	trooper.SetType(type);
+
+	std::cout << "Enter information about the planet: " << std::endl;
+	Planet planet;
+	in >> planet;
+	trooper.SetPlanet(planet);
+
+	return in;
+}
+
+void Stormtrooper::ReadFromFile(const char* fileName, int& position)
+{
+	std::ifstream input;
+	input.open(fileName);
+	char buffer[64];
+	int i = 0;
+	input.seekg(position, std::ios::cur);
+
+	while (input.getline(buffer, 64, '\n'))
+	{
+		if (i == 4 && i > 0)
+		{
+			break;
+		}
+
+		i++;
+		position += CountSymbols1(buffer) + 2;
+
+		if (i == 1)
+		{
+			this->SetID(buffer);
+		}
+		else if (i == 2)
+		{
+			this->SetRank(CharArrayToEnumTrooper(buffer));
+		}
+		else if (i == 3)
+		{
+			this->SetType(buffer);
+		}
+		else
+		{
+			this->planet.SetName(buffer);
+		}
+	}
+
+	position += 2;
+	input.close();
+}
+
+void Stormtrooper::WriteOnFileTrooper(const char* fileName)
+{
+	std::ofstream myFile(fileName, std::ios::app);
+
+	myFile << this->GetID() << std::endl;
+
+	char* rankType = new char[32];
+	rankType = EnumTocharArray(this->GetRank(), rankType);
+	myFile << rankType << std::endl;
+
+	myFile << this->GetType() << std::endl;
+	myFile << this->GetPlanet().GetName() << std::endl;
+	myFile << std::endl;
+
+	delete[] rankType;
+	myFile.close();
 }
