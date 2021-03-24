@@ -56,4 +56,10 @@ public:
 	Planet GetPlanet() const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Stormtrooper& trooper);
+
+	friend std::istream& operator>>(std::istream& in, Stormtrooper& trooper);
+
+	void ReadFromFile(const char* fileName, int& position);
+
+	void WriteOnFileTrooper(const char* fileName);
 };
