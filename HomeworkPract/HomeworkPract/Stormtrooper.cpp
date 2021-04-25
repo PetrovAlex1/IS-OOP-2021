@@ -162,16 +162,13 @@ Stormtrooper& Stormtrooper::operator=(const Stormtrooper& other)
 {
 	if (this != &other)
 	{
-		delete[] id;
-		delete[] type;
+		this->id = new char[strlen(other.id) + 1];
+		strcpy(this->id, other.id);
+		this->rank = other.rank;
+		this->type = new char[strlen(other.type) + 1];
+		strcpy(this->type, other.type);
+		this->planet = other.planet;
 	}
-
-	this->id = new char[strlen(other.id) + 1];
-	strcpy(this->id, other.id);
-	this->rank = other.rank;
-	this->type = new char[strlen(other.type) + 1];
-	strcpy(this->type, other.type);
-	this->planet = other.planet;
 
 	return *this;
 }

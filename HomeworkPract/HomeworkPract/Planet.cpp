@@ -217,18 +217,14 @@ Planet& Planet::operator=(const Planet& otherPlanet)
 {
 	if (this != &otherPlanet)
 	{
-		delete[] name;
-		delete[] planetSystem;
-		delete[] republic;
+		this->name = new char[strlen(otherPlanet.name) + 1];
+		strcpy(this->name, otherPlanet.name);
+		this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
+		strcpy(this->planetSystem, otherPlanet.planetSystem);
+		this->republic = new char[strlen(otherPlanet.republic) + 1];
+		strcpy(this->republic, otherPlanet.republic);
+		this->planetType = otherPlanet.planetType;
 	}
-
-	this->name = new char[strlen(otherPlanet.name) + 1];
-	strcpy(this->name, otherPlanet.name);
-	this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
-	strcpy(this->planetSystem, otherPlanet.planetSystem);
-	this->republic = new char[strlen(otherPlanet.republic) + 1];
-	strcpy(this->republic, otherPlanet.republic);
-	this->planetType = otherPlanet.planetType;
 
 	return *this;
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Jedi.h"
 #include "Stormtrooper.h"
+#include "myVector.h"
 
 int ParseCharToInt2(char* text)
 {
@@ -64,8 +65,34 @@ bool StrCmp4(const char* text1, const char* text2)
 	return true;
 }
 
-template<typename P>
+enum class Ammunition
+{
+	HeavyEquipment,
+	MiddleEquipment,
+	LightEquipment
+};
 
+Ammunition CharArrayToEnumAmmu(char* ammu)
+{
+	if (ammu[0] >= 97 && ammu[0] <= 122)
+	{
+		ammu[0] -= 'a' - 'A';
+	}
+
+	if (StrCmp4(ammu, "HeavyEquipment"))
+	{
+		return Ammunition::HeavyEquipment;
+	}
+	else if (StrCmp4(ammu, "MiddleEquipment"))
+	{
+		return Ammunition::MiddleEquipment;
+	}
+	else if (StrCmp4(ammu, "LightEquipment"))
+	{
+		return Ammunition::LightEquipment;
+	}
+}
+template<typename P>
 class BattleShip
 {
 private:
@@ -73,6 +100,9 @@ private:
 	int countCannons;
 	bool couldMakeHyperJump;
 	double size;
+	double fuelAmount;
+	Ammunition ammunition;
+	double hullStrength;
 	P pilot;
 
 public:
@@ -83,6 +113,9 @@ public:
 		this->countCannons = 0;
 		this->couldMakeHyperJump = false;
 		this->size = 0.0;
+		this->fuelAmount = 0.0;
+		this->ammunation = Ammunition::LightEquipment;
+		this->hullStrength = 0.0;
 	}
 
 	BattleShip(const BattleShip& otherBattleShip)
@@ -91,31 +124,39 @@ public:
 		this->countCannons = otherBattleShip.countCannons;
 		this->couldMakeHyperJump = otherBattleShip.couldMakeHyperJump;
 		this->size = otherBattleShip.size;
+		this->fuelAmount = otherBattleShip.fuelAmount;
+		this->ammunation = otherBattleShip.ammunation;
+		this->hullStrength = otherBattleShip.hullStrength;
+		this->pilot = otherBattleShip.pilot;
 	}
 
 	BattleShip& operator=(const BattleShip& otherBattleShip)
 	{
-		/*if (this != &otherBattleShip)
+		if (this != &otherBattleShip)
 		{
-			this->speed = 0.0;
-			this->countCannons = 0;
-			this->couldMakeHyperJump = false;
-			this->size = 0.0;
-		}*/
+			this->speed = otherBattleShip.speed;
+			this->countCannons = otherBattleShip.countCannons;
+			this->couldMakeHyperJump = otherBattleShip.couldMakeHyperJump;
+			this->size = otherBattleShip.size;
+			this->fuelAmount = otherBattleShip.fuelAmount;
+			this->ammunation = otherBattleShip.ammunation;
+			this->hullStrength = otherBattleShip.hullStrength;
+			this->pilot = otherBattleShip.pilot;
+		}
 
-		this->speed = otherBattleShip.speed;
-		this->countCannons = otherBattleShip.countCannons;
-		this->couldMakeHyperJump = otherBattleShip.couldMakeHyperJump;
-		this->size = otherBattleShip.size;
+		return *this;
 	}
 
-	BattleShip(const double _speed, const int _countCannons, const bool _couldMakeHyperJump, const double _size, const P _pilot)
+	BattleShip(const double& _speed, const int& _countCannons, const bool& _couldMakeHyperJump, const double& _size, const P& _pilot, const double& _fuelAmount, const Ammunition _ammunition, const double& _hullStrength)
 	{
 		this->speed = _speed;
 		this->countCannons = _countCannons;
 		this->couldMakeHyperJump = _couldMakeHyperJump;
 		this->size = _size;
 		this->pilot = _pilot;
+		this->fuelAmount = _fuelAmount;
+		this->ammunition = _ammunition;
+		this->hullStrength = _hullStrength;
 	}
 
 	void Print()
@@ -133,7 +174,10 @@ public:
 		}
 
 		std::cout << " with size " << this->size
-			<< "and pilot" << this->pilot;
+			<< " and pilot " << this->pilot
+			<< " with fuel capacity: " << this->fuelAmount
+			<< " ammunition: " << this->ammunition
+			<< " and hull strength: " << this->hullStrength << std::endl;
 	}
 
 	void SetSpeed(double _speed)
@@ -169,6 +213,21 @@ public:
 		this->pilot = _pilot;
 	}
 
+	void SetFuelCapacity(const double& _fuelAmount)
+	{
+		this->fuelAmount = _fuelAmount;
+	}
+
+	void SetAmmunitioin(const Ammunition _ammunition)
+	{
+		this->ammunition = _ammunition;
+	}
+
+	void SetHullStrength(const double& _hullStrength)
+	{
+		this->hullStrength = _hullStrength;
+	}
+
 	double GetSpeed() const
 	{
 		return this->speed;
@@ -194,6 +253,75 @@ public:
 		return this->pilot;
 	}
 
+	double GetFuelCapacity() const
+	{
+		return this->fuelAmount;
+	}
+
+	Ammunition GetAmmunition() const
+	{
+		return this->ammunition;
+	}
+
+	double GetHullStrength() const
+	{
+		return this->hullStrength;
+	}
+
+	void Refueling(const double& fuel)
+	{
+		this->fuelAmount += fuel;
+	}
+
+	void ChangeAmmunation(char* ammu)
+	{
+		Ammunition newAmmunition = CharArrayToEnumAmmu(ammu);
+
+		if (this->ammunition == newAmmunition)
+		{
+			return;
+		}
+		else if (this->ammunition == Ammunition::LightEquipment)
+		{
+			if (newAmmunition == Ammunition::MiddleEquipment)
+			{
+				this->SetAmmunitioin(newAmmunition);
+				this->speed -= this->speed * 0.30;
+			}
+			else
+			{
+				this->SetAmmunitioin(newAmmunition);
+				this->speed -= this->speed * 0.60;
+			}
+		}
+		else if (this->ammunition == Ammunition::MiddleEquipment)
+		{
+			if (newAmmunition == Ammunition::LightEquipment)
+			{
+				this->SetAmmunitioin(newAmmunition);
+				this->speed += this->speed * 0.30;
+			}
+			else
+			{
+				this->SetAmmunitioin(newAmmunition);
+				this->speed -= this->speed * 0.30;
+			}
+		}
+		else
+		{
+			if (newAmmunition == Ammunition::MiddleEquipment)
+			{
+				this->SetAmmunitioin(newAmmunition);
+				this->speed += this->speed * 0.30;
+			}
+			else if (newAmmunition == Ammunition::LightEquipment)
+			{
+				this->SetAmmunitioin(newAmmunition);
+				this->speed += this->speed * 0.60;
+			}
+		}
+	}
+
 	friend std::ostream& operator<<(std::ostream& out, const BattleShip& battleShip)
 	{
 		out << "Battle ship with speed " << battleShip.GetSpeed()
@@ -209,7 +337,10 @@ public:
 		}
 
 		out << " with size " << battleShip.GetSize()
-			<< " and pilot " << std::endl << battleShip.GetPilot();
+			<< " and pilot " << std::endl << battleShip.GetPilot()
+			<< " with fuel capacity: " << battleShip.GetFuelCapacity()
+			<< " ammunition: " << battleShip.GetAmmunition()
+			<< " and hull strength: " << battleShip.GetHullStrength() << std::endl;
 
 		return out;
 	}
@@ -243,6 +374,21 @@ public:
 		P pilot;
 		in >> pilot;
 		battleShip.SetPilot(pilot);
+
+		std::cout << "Enter fuel capacity: ";
+		double fuelAmount;
+		in >> fuelAmount;
+		battleShip.SetFuelCapacity(fuelAmount);
+
+		std::cout << "Enter ammunition type: ";
+		char ammu[32];
+		in >> ammu;
+		battleShip.SetAmmunitioin(CharArrayToEnumAmmu(ammu));
+
+		std::cout << "Enter hull strength: ";
+		double hullStrength;
+		in >> hullStrength;
+		battleShip.SetFuelCapacity(hullStrength);
 
 		return in;
 	}
@@ -290,6 +436,20 @@ public:
 				double num = atof(buffer);
 				this->SetSize(num);
 			}
+			else if (i == 5)
+			{
+				double fuelAmount = atof(buffer);
+				this->SetFuelCapacity(fuelAmount);
+			}
+			else if (i == 6)
+			{
+				this->SetAmmunitioin(CharArrayToEnumAmmu(buffer));
+			}
+			else
+			{
+				double hullStrength = atof(buffer);
+				this->SetFuelCapacity(hullStrength);
+			}
 		}
 
 		position += 2;
@@ -304,8 +464,28 @@ public:
 		myFile << this->GetCountCannons() << std::endl;
 		myFile << this->GetCouldMakeHyperJump() << std::endl;
 		myFile << this->GetSize() << std::endl;
+		myFile << this->GetFuelCapacity() << std::endl;
+		myFile << this->GetAmmunition() << std::endl;
+		myFile << this->GetHullStrength() << std::endl;
 		myFile << std::endl;
 
 		myFile.close();
 	}*/
 };
+
+template<typename T>
+myVector<BattleShip<T>> RemoveWeakerBattleShips(myVector<BattleShip<T>>& battleships)
+{
+	myVector<BattleShip<T>> newVector;
+	int size = battleships.length();
+
+	for (int i = 0; i < size; i++)
+	{
+		if (battleships[i].hullStrength > 50)
+		{
+			newVector.add(battleships[i]);
+		}
+	}
+
+	return newVector;
+}

@@ -119,21 +119,15 @@ Jedi& Jedi::operator=(const Jedi& otherJedi)
 {
 	if (this != &otherJedi)
 	{
-		delete[] name;
-		midichlorian = 0.0;
-		delete[] spicies;
-		delete[] spicies;
-		delete[] militaryRank;
+		this->name = new char[strlen(otherJedi.name) + 1];
+		strcpy(this->name, otherJedi.name);
+		this->rank = otherJedi.rank;
+		this->planet = otherJedi.planet;
+		this->spicies = new char[strlen(otherJedi.spicies) + 1];
+		strcpy(this->spicies, otherJedi.spicies);
+		this->militaryRank = new char[strlen(otherJedi.militaryRank) + 1];
+		strcpy(this->militaryRank, otherJedi.militaryRank);
 	}
-
-	this->name = new char[strlen(otherJedi.name) + 1];
-	strcpy(this->name, otherJedi.name);
-	this->rank = otherJedi.rank;
-	this->planet = otherJedi.planet;
-	this->spicies = new char[strlen(otherJedi.spicies) + 1];
-	strcpy(this->spicies, otherJedi.spicies);
-	this->militaryRank = new char[strlen(otherJedi.militaryRank) + 1];
-	strcpy(this->militaryRank, otherJedi.militaryRank);
 
 	return *this;
 }

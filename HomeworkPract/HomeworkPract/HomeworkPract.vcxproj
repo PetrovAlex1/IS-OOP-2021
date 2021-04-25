@@ -139,14 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HomeworkPract.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Jedi.cpp" />
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Stormtrooper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleShip.h" />
+    <ClInclude Include="CommonFunctions.h" />
     <ClInclude Include="Jedi.h" />
+    <ClInclude Include="myVector.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="Stormtrooper.h" />
   </ItemGroup>
