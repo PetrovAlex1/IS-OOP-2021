@@ -118,7 +118,7 @@ public:
 	{
 		for (int i = 0; i < this->size; i++)
 		{
-			std::cout << this->data[i] << " ";
+			std::cout << this->data[i] << std::endl;
 		}
 
 		std::cout << std::endl;

@@ -148,6 +148,7 @@
     <ClInclude Include="BattleShip.h" />
     <ClInclude Include="CommonFunctions.h" />
     <ClInclude Include="Jedi.h" />
+    <ClInclude Include="LList.h" />
     <ClInclude Include="myVector.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="Stormtrooper.h" />

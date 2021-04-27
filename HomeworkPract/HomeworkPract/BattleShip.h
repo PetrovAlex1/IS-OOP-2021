@@ -3,67 +3,12 @@
 #include "Jedi.h"
 #include "Stormtrooper.h"
 #include "myVector.h"
+#include "CommonFunctions.h"
 
-int ParseCharToInt2(char* text)
-{
-	int number = 0;
-	int d = 10;
-
-	for (int i = 0; text[i] != '\0'; i++)
-	{
-		number = number * d + text[i] - 48;
-	}
-
-	return number;
-}
-
-int CountSymbols4(char* text)
-{
-	int counter = 0;
-	int i = 0;
-
-	while (text[i] != '\0')
-	{
-		counter++;
-		i++;
-	}
-
-	return counter;
-}
-
-bool StrCmp4(char* text1, const char* text2)
-{
-	int i = 0;
-
-	while (text1[i] != '\0')
-	{
-		if (text1[i] != text2[i])
-		{
-			return false;
-		}
-
-		i++;
-	}
-
-	return true;
-}
-
-bool StrCmp4(const char* text1, const char* text2)
-{
-	int i = 0;
-
-	while (text1[i] != '\0')
-	{
-		if (text1[i] != text2[i])
-		{
-			return false;
-		}
-
-		i++;
-	}
-
-	return true;
-}
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#pragma warning(disable:4996)
 
 enum class Ammunition
 {
@@ -72,26 +17,27 @@ enum class Ammunition
 	LightEquipment
 };
 
-Ammunition CharArrayToEnumAmmu(char* ammu)
+Ammunition CharArrayToEnumAmmu(const char* ammu)
 {
-	if (ammu[0] >= 97 && ammu[0] <= 122)
-	{
-		ammu[0] -= 'a' - 'A';
-	}
+	//if (ammu[0] >= 97 && ammu[0] <= 122)
+	//{
+	//	ammu[0] -= 'a' - 'A';
+	//}
 
-	if (StrCmp4(ammu, "HeavyEquipment"))
+	if (StrCmp(ammu, "HeavyEquipment"))
 	{
 		return Ammunition::HeavyEquipment;
 	}
-	else if (StrCmp4(ammu, "MiddleEquipment"))
+	else if (StrCmp(ammu, "MiddleEquipment"))
 	{
 		return Ammunition::MiddleEquipment;
 	}
-	else if (StrCmp4(ammu, "LightEquipment"))
+	else if (StrCmp(ammu, "LightEquipment"))
 	{
 		return Ammunition::LightEquipment;
 	}
 }
+
 template<typename P>
 class BattleShip
 {
@@ -114,7 +60,7 @@ public:
 		this->couldMakeHyperJump = false;
 		this->size = 0.0;
 		this->fuelAmount = 0.0;
-		this->ammunation = Ammunition::LightEquipment;
+		this->ammunition = Ammunition::LightEquipment;
 		this->hullStrength = 0.0;
 	}
 
@@ -125,7 +71,7 @@ public:
 		this->couldMakeHyperJump = otherBattleShip.couldMakeHyperJump;
 		this->size = otherBattleShip.size;
 		this->fuelAmount = otherBattleShip.fuelAmount;
-		this->ammunation = otherBattleShip.ammunation;
+		this->ammunition = otherBattleShip.ammunition;
 		this->hullStrength = otherBattleShip.hullStrength;
 		this->pilot = otherBattleShip.pilot;
 	}
@@ -139,7 +85,7 @@ public:
 			this->couldMakeHyperJump = otherBattleShip.couldMakeHyperJump;
 			this->size = otherBattleShip.size;
 			this->fuelAmount = otherBattleShip.fuelAmount;
-			this->ammunation = otherBattleShip.ammunation;
+			this->ammunition = otherBattleShip.ammunition;
 			this->hullStrength = otherBattleShip.hullStrength;
 			this->pilot = otherBattleShip.pilot;
 		}
@@ -202,7 +148,7 @@ public:
 
 	void SetPilot(P _pilot)
 	{
-		if (!StrCmp4(typeid(_pilot).name(), "class Jedi") && !StrCmp4(typeid(_pilot).name(), "class Stormtrooper"))
+		if (!StrCmp(typeid(_pilot).name(), "class Jedi") && !StrCmp(typeid(_pilot).name(), "class Stormtrooper"))
 		{
 			std::cerr << "Invalid type!" << std::endl;
 
@@ -339,8 +285,22 @@ public:
 		out << " with size " << battleShip.GetSize()
 			<< " and pilot " << std::endl << battleShip.GetPilot()
 			<< " with fuel capacity: " << battleShip.GetFuelCapacity()
-			<< " ammunition: " << battleShip.GetAmmunition()
-			<< " and hull strength: " << battleShip.GetHullStrength() << std::endl;
+			<< " ammunition: ";
+
+		if (battleShip.GetAmmunition() == Ammunition::HeavyEquipment)
+		{
+			std::cout << "HeavyEquipment ";
+		}
+		else if (battleShip.GetAmmunition() == Ammunition::MiddleEquipment)
+		{
+			std::cout << "MiddleEquipment";
+		}
+		else
+		{
+			std::cout << "LightEquipment";
+		}
+
+		std::cout << " and hull strength: " << battleShip.GetHullStrength() << std::endl;
 
 		return out;
 	}
@@ -361,7 +321,7 @@ public:
 		char couldMakeHyperJump[5];
 		in >> couldMakeHyperJump;
 
-		if (StrCmp4(couldMakeHyperJump, "true"))
+		if (StrCmp(couldMakeHyperJump, "true"))
 		{
 			battleShip.SetCouldMakeHyperJump(true);
 		}
@@ -375,7 +335,7 @@ public:
 		in >> pilot;
 		battleShip.SetPilot(pilot);
 
-		std::cout << "Enter fuel capacity: ";
+		std::cout << "Enter fuel amount: ";
 		double fuelAmount;
 		in >> fuelAmount;
 		battleShip.SetFuelCapacity(fuelAmount);
@@ -409,7 +369,7 @@ public:
 			}
 
 			i++;
-			position += CountSymbols4(buffer) + 2;
+			position += CountSymbols(buffer) + 2;
 
 			if (i == 1)
 			{
@@ -418,11 +378,11 @@ public:
 			}
 			else if (i == 2)
 			{
-				this->SetCountCannons(ParseCharToInt2(buffer));
+				this->SetCountCannons(ParseCharToInt(buffer));
 			}
 			else if (i == 3)
 			{
-				if (StrCmp4(buffer, "true"))
+				if (StrCmp(buffer, "true"))
 				{
 					this->SetCouldMakeHyperJump(true);
 				}
@@ -481,11 +441,72 @@ myVector<BattleShip<T>> RemoveWeakerBattleShips(myVector<BattleShip<T>>& battles
 
 	for (int i = 0; i < size; i++)
 	{
-		if (battleships[i].hullStrength > 50)
+		if (battleships[i].GetHullStrength() > 50)
 		{
 			newVector.add(battleships[i]);
 		}
 	}
 
 	return newVector;
+}
+
+//Just for testing
+template<typename P>
+BattleShip<P> Recharge(BattleShip<P>& battleship, const double& fuel)
+{
+	battleship.Refueling(fuel);
+
+	return battleship;
+}
+
+template<typename P>
+BattleShip<P> ChangeAmmunation(BattleShip<P>& battleship, const char* ammu)
+{
+	Ammunition newAmmunition = CharArrayToEnumAmmu(ammu);
+
+	if (battleship.GetAmmunition() == newAmmunition)
+	{
+		return battleship;
+	}
+	else if (battleship.GetAmmunition() == Ammunition::LightEquipment)
+	{
+		if (newAmmunition == Ammunition::MiddleEquipment)
+		{
+			battleship.SetAmmunitioin(newAmmunition);
+			battleship.SetSpeed(battleship.GetSpeed() - battleship.GetSpeed() * 0.30);
+		}
+		else
+		{
+			battleship.SetAmmunitioin(newAmmunition);
+			battleship.SetSpeed(battleship.GetSpeed() - battleship.GetSpeed() * 0.60);
+		}
+	}
+	else if (battleship.GetAmmunition() == Ammunition::MiddleEquipment)
+	{
+		if (newAmmunition == Ammunition::LightEquipment)
+		{
+			battleship.SetAmmunitioin(newAmmunition);
+			battleship.SetSpeed(battleship.GetSpeed() + battleship.GetSpeed() * 0.30);
+		}
+		else
+		{
+			battleship.SetAmmunitioin(newAmmunition);
+			battleship.SetSpeed(battleship.GetSpeed() - battleship.GetSpeed() * 0.30);
+		}
+	}
+	else
+	{
+		if (newAmmunition == Ammunition::MiddleEquipment)
+		{
+			battleship.SetAmmunitioin(newAmmunition);
+			battleship.SetSpeed(battleship.GetSpeed() + battleship.GetSpeed() * 0.30);
+		}
+		else if (newAmmunition == Ammunition::LightEquipment)
+		{
+			battleship.SetAmmunitioin(newAmmunition);
+			battleship.SetSpeed(battleship.GetSpeed() + battleship.GetSpeed() * 0.60);
+		}
+	}
+
+	return battleship;
 }

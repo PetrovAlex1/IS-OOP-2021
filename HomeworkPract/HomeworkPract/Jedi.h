@@ -10,14 +10,12 @@ enum class JediRank
 	Knight
 };
 
-char* EnumTocharArray(JediRank rank);
-
 class Jedi
 {
 private:
 	char* name;
 	JediRank rank;
-	float midichlorian;
+	double midichlorian;
 	Planet planet;
 	char* spicies;
 	char* militaryRank;
@@ -29,7 +27,7 @@ public:
 
 	Jedi& operator=(const Jedi& otherJedi);
 
-	Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet& _planet, const char* _spicies, const char* _militaryRank);
+	Jedi(const char* _name, const JediRank _rank, const double& _midichlorian, const Planet& _planet, const char* _spicies, const char* _militaryRank);
 
 	~Jedi();
 
@@ -39,7 +37,7 @@ public:
 
 	void SetRank(const JediRank _rank);
 
-	void SetMidichlorian(const float _midichlorian);
+	void SetMidichlorian(const double _midichlorian);
 
 	void SetPlanet(const Planet _planet);
 
@@ -51,7 +49,7 @@ public:
 
 	JediRank GetRank() const;
 
-	float GetMidichlorian() const;
+	double GetMidichlorian() const;
 
 	Planet GetPlanet() const;
 

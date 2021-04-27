@@ -44,8 +44,11 @@
     <ClInclude Include="myVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="CommonFunctions.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
