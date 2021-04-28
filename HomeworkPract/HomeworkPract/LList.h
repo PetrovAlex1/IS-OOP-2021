@@ -34,9 +34,9 @@ LList<T>::LList(const T& data)
 template<typename T>
 LList<T>::~LList()
 {
-	LList<T>* current = this;
+	//LList<T>* current = this;
 
-	while (current->next != nullptr)
+	while (this->next != nullptr)
 	{
 		this->PopFront();
 		/*LList<T>* temp = current;
@@ -44,8 +44,6 @@ LList<T>::~LList()
 		temp->next = nullptr;
 		delete temp;*/
 	}
-
-	delete this;
 }
 
 template<typename T>
@@ -104,7 +102,7 @@ void LList<T>::PrintLog()
 {
 	LList<T>* current = this;
 
-	while (current->next)
+	while (current)
 	{
 		std::cout << current->data << std::endl;
 		current = current->next;
