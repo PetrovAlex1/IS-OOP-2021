@@ -18,11 +18,26 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BattleShip.h" />
+    <ClInclude Include="CommonFunctions.h" />
+    <ClInclude Include="Jedi.h" />
+    <ClInclude Include="LList.h" />
+    <ClInclude Include="myVector.h" />
+    <ClInclude Include="Planet.h" />
+    <ClInclude Include="Stormtrooper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Jedi.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="Stormtrooper.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a3ef60f2-c5bb-4f5b-9994-95935a2c0306}</ProjectGuid>
-    <RootNamespace>HomeworkPract</RootNamespace>
+    <ProjectGuid>{2fdb3254-b83c-4d62-ad47-a9846813d2a6}</ProjectGuid>
+    <RootNamespace>StarWarsPractOOP</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -138,18 +153,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="HomeworkPract.cpp" />
-    <ClCompile Include="Jedi.cpp" />
-    <ClCompile Include="Planet.cpp" />
-    <ClCompile Include="Stormtrooper.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BattleShip.h" />
-    <ClInclude Include="Jedi.h" />
-    <ClInclude Include="Planet.h" />
-    <ClInclude Include="Stormtrooper.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

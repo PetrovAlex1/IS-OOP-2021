@@ -1,41 +1,11 @@
 #include "Planet.h"
+#include "CommonFunctions.h"
 #include <cstring>
 #include <fstream>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
-
-int CountSymbols2(char* text)
-{
-	int counter = 0;
-	int i = 0;
-
-	while (text[i] != '\0')
-	{
-		counter++;
-		i++;
-	}
-
-	return counter;
-}
-
-bool StrCmp2(char* text1, const char* text2)
-{
-	int i = 0;
-
-	while (text1[i] != '\0')
-	{
-		if (text1[i] != text2[i])
-		{
-			return false;
-		}
-
-		i++;
-	}
-
-	return true;
-}
 
 PlanetType CharArrayToEnumPlanet(char* type)
 {
@@ -44,67 +14,67 @@ PlanetType CharArrayToEnumPlanet(char* type)
 		type[0] -= 'a' - 'A';
 	}
 
-	if (StrCmp2(type, "CarbonPlanet"))
+	if (StrCmp(type, "CarbonPlanet"))
 	{
 		return PlanetType::CarbonPlanet;
 	}
-	else if (StrCmp2(type, "CarbonPlanet"))
+	else if (StrCmp(type, "CarbonPlanet"))
 	{
 		return PlanetType::ChthonianPlanet;
 	}
-	else if (StrCmp2(type, "CorelessPlanet"))
+	else if (StrCmp(type, "CorelessPlanet"))
 	{
 		return PlanetType::CorelessPlanet;
 	}
-	else if (StrCmp2(type, "DesertPlanet"))
+	else if (StrCmp(type, "DesertPlanet"))
 	{
 		return PlanetType::DesertPlanet;
 	}
-	else if (StrCmp2(type, "GasDwarf"))
+	else if (StrCmp(type, "GasDwarf"))
 	{
 		return PlanetType::GasDwarf;
 	}
-	else if (StrCmp2(type, "GasGiant"))
+	else if (StrCmp(type, "GasGiant"))
 	{
 		return PlanetType::GasGiant;
 	}
-	else if (StrCmp2(type, "HeliumPlanet"))
+	else if (StrCmp(type, "HeliumPlanet"))
 	{
 		return PlanetType::HeliumPlanet;
 	}
-	else if (StrCmp2(type, "IceGiant"))
+	else if (StrCmp(type, "IceGiant"))
 	{
 		return PlanetType::IceGiant;
 	}
-	else if (StrCmp2(type, "IcePlanet"))
+	else if (StrCmp(type, "IcePlanet"))
 	{
 		return PlanetType::IcePlanet;
 	}
-	else if (StrCmp2(type, "IronPlanet"))
+	else if (StrCmp(type, "IronPlanet"))
 	{
 		return PlanetType::IronPlanet;
 	}
-	else if (StrCmp2(type, "LavaPlanet"))
+	else if (StrCmp(type, "LavaPlanet"))
 	{
 		return PlanetType::LavaPlanet;
 	}
-	else if (StrCmp2(type, "OceanPlanet"))
+	else if (StrCmp(type, "OceanPlanet"))
 	{
 		return PlanetType::OceanPlanet;
 	}
-	else if (StrCmp2(type, "ProtoPlanet"))
+	else if (StrCmp(type, "ProtoPlanet"))
 	{
 		return PlanetType::ProtoPlanet;
 	}
-	else if (StrCmp2(type, "PuffyPlanet"))
+	else if (StrCmp(type, "PuffyPlanet"))
 	{
 		return PlanetType::PuffyPlanet;
 	}
-	else if (StrCmp2(type, "SilicatePlanet"))
+	else if (StrCmp(type, "SilicatePlanet"))
 	{
 		return PlanetType::SilicatePlanet;
 	}
-	else if (StrCmp2(type, "TerrestricalPlanet"))
+	else if (StrCmp(type, "TerrestricalPlanet"))
 	{
 		return PlanetType::TerrestricalPlanet;
 	}
@@ -217,18 +187,14 @@ Planet& Planet::operator=(const Planet& otherPlanet)
 {
 	if (this != &otherPlanet)
 	{
-		delete[] name;
-		delete[] planetSystem;
-		delete[] republic;
+		this->name = new char[strlen(otherPlanet.name) + 1];
+		strcpy(this->name, otherPlanet.name);
+		this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
+		strcpy(this->planetSystem, otherPlanet.planetSystem);
+		this->republic = new char[strlen(otherPlanet.republic) + 1];
+		strcpy(this->republic, otherPlanet.republic);
+		this->planetType = otherPlanet.planetType;
 	}
-
-	this->name = new char[strlen(otherPlanet.name) + 1];
-	strcpy(this->name, otherPlanet.name);
-	this->planetSystem = new char[strlen(otherPlanet.planetSystem) + 1];
-	strcpy(this->planetSystem, otherPlanet.planetSystem);
-	this->republic = new char[strlen(otherPlanet.republic) + 1];
-	strcpy(this->republic, otherPlanet.republic);
-	this->planetType = otherPlanet.planetType;
 
 	return *this;
 }
@@ -432,7 +398,7 @@ void Planet::ReadFromFile(const char* fileName, int& position)
 		}
 
 		i++;
-		position += CountSymbols2(buffer) + 2;
+		position += CountSymbols(buffer) + 2;
 
 		if (i == 1)
 		{

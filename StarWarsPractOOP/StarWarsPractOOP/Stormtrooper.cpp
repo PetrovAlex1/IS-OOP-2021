@@ -1,41 +1,11 @@
 #include "Stormtrooper.h"
+#include "CommonFunctions.h"
 #include <fstream>
 #include <cstring>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
-
-int CountSymbols1(char* text)
-{
-	int counter = 0;
-	int i = 0;
-
-	while (text[i] != '\0')
-	{
-		counter++;
-		i++;
-	}
-
-	return counter;
-}
-
-bool StrCmp1(char* text1, const char* text2)
-{
-	int i = 0;
-
-	while (text1[i] != '\0')
-	{
-		if (text1[i] != text2[i])
-		{
-			return false;
-		}
-
-		i++;
-	}
-
-	return true;
-}
 
 TrooperRank CharArrayToEnumTrooper(char* rank)
 {
@@ -44,39 +14,39 @@ TrooperRank CharArrayToEnumTrooper(char* rank)
 		rank[0] -= 'a' - 'A';
 	}
 
-	if (StrCmp1(rank, "SquadLeader"))
+	if (StrCmp(rank, "SquadLeader"))
 	{
 		return TrooperRank::SquadLeader;
 	}
-	else if (StrCmp1(rank, "RegimentCommander"))
+	else if (StrCmp(rank, "RegimentCommander"))
 	{
 		return TrooperRank::RegimentCommander;
 	}
-	else if (StrCmp1(rank, "Commander"))
+	else if (StrCmp(rank, "Commander"))
 	{
 		return TrooperRank::Commander;
 	}
-	else if (StrCmp1(rank, "Enlisted"))
+	else if (StrCmp(rank, "Enlisted"))
 	{
 		return TrooperRank::Enlisted;
 	}
-	else if (StrCmp1(rank, "Sergeant"))
+	else if (StrCmp(rank, "Sergeant"))
 	{
 		return TrooperRank::Sergeant;
 	}
-	else if (StrCmp1(rank, "PlatoonLeader"))
+	else if (StrCmp(rank, "PlatoonLeader"))
 	{
 		return TrooperRank::PlatoonLeader;
 	}
-	else if (StrCmp1(rank, "GeneralOfLegion"))
+	else if (StrCmp(rank, "GeneralOfLegion"))
 	{
 		return TrooperRank::GeneralOfLegion;
 	}
-	else if (StrCmp1(rank, "CompanyLeader"))
+	else if (StrCmp(rank, "CompanyLeader"))
 	{
 		return TrooperRank::CompanyLeader;
 	}
-	else if (StrCmp1(rank, "BattalionCommander"))
+	else if (StrCmp(rank, "BattalionCommander"))
 	{
 		return TrooperRank::BattalionCommander;
 	}
@@ -162,16 +132,13 @@ Stormtrooper& Stormtrooper::operator=(const Stormtrooper& other)
 {
 	if (this != &other)
 	{
-		delete[] id;
-		delete[] type;
+		this->id = new char[strlen(other.id) + 1];
+		strcpy(this->id, other.id);
+		this->rank = other.rank;
+		this->type = new char[strlen(other.type) + 1];
+		strcpy(this->type, other.type);
+		this->planet = other.planet;
 	}
-
-	this->id = new char[strlen(other.id) + 1];
-	strcpy(this->id, other.id);
-	this->rank = other.rank;
-	this->type = new char[strlen(other.type) + 1];
-	strcpy(this->type, other.type);
-	this->planet = other.planet;
 
 	return *this;
 }
@@ -343,7 +310,7 @@ void Stormtrooper::ReadFromFile(const char* fileName, int& position)
 		}
 
 		i++;
-		position += CountSymbols1(buffer) + 2;
+		position += CountSymbols(buffer) + 2;
 
 		if (i == 1)
 		{

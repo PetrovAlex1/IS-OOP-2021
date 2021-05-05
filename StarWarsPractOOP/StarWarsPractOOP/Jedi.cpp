@@ -1,54 +1,11 @@
 #include "Jedi.h"
+#include "CommonFunctions.h"
 #include <fstream>
 #include <cstring>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #pragma warning(disable:4996)
-
-int ParseCharToInt1(char* text)
-{
-	int number = 0;
-	int d = 10;
-
-	for (int i = 0; text[i] != '\0'; i++)
-	{
-		number = number * d + text[i] - 48;
-	}
-
-	return number;
-}
-
-int CountSymbols3(char* text)
-{
-	int counter = 0;
-	int i = 0;
-
-	while (text[i] != '\0')
-	{
-		counter++;
-		i++;
-	}
-
-	return counter;
-}
-
-bool StrCmp3(char* text1, const char* text2)
-{
-	int i = 0;
-
-	while (text1[i] != '\0')
-	{
-		if (text1[i] != text2[i])
-		{
-			return false;
-		}
-
-		i++;
-	}
-
-	return true;
-}
 
 JediRank CharArrayToEnumJedi(char* rank)
 {
@@ -57,19 +14,19 @@ JediRank CharArrayToEnumJedi(char* rank)
 		rank[0] -= 'a' - 'A';
 	}
 
-	if (StrCmp3(rank, "Knight"))
+	if (StrCmp(rank, "Knight"))
 	{
 		return JediRank::Knight;
 	}
-	else if (StrCmp3(rank, "Master"))
+	else if (StrCmp(rank, "Master"))
 	{
 		return JediRank::Master;
 	}
-	else if (StrCmp3(rank, "GrandMaster"))
+	else if (StrCmp(rank, "GrandMaster"))
 	{
 		return JediRank::GrandMaster;
 	}
-	else if (StrCmp3(rank, "Padawan"))
+	else if (StrCmp(rank, "Padawan"))
 	{
 		return JediRank::Padawan;
 	}
@@ -108,6 +65,7 @@ Jedi::Jedi(const Jedi& otherJedi)
 	this->name = new char[strlen(otherJedi.name) + 1];
 	strcpy(this->name, otherJedi.name);
 	this->rank = otherJedi.rank;
+	this->midichlorian = otherJedi.midichlorian;
 	this->planet = otherJedi.planet;
 	this->spicies = new char[strlen(otherJedi.spicies) + 1];
 	strcpy(this->spicies, otherJedi.spicies);
@@ -119,26 +77,21 @@ Jedi& Jedi::operator=(const Jedi& otherJedi)
 {
 	if (this != &otherJedi)
 	{
-		delete[] name;
-		midichlorian = 0.0;
-		delete[] spicies;
-		delete[] spicies;
-		delete[] militaryRank;
+		this->name = new char[strlen(otherJedi.name) + 1];
+		strcpy(this->name, otherJedi.name);
+		this->rank = otherJedi.rank;
+		this->midichlorian = otherJedi.midichlorian;
+		this->planet = otherJedi.planet;
+		this->spicies = new char[strlen(otherJedi.spicies) + 1];
+		strcpy(this->spicies, otherJedi.spicies);
+		this->militaryRank = new char[strlen(otherJedi.militaryRank) + 1];
+		strcpy(this->militaryRank, otherJedi.militaryRank);
 	}
-
-	this->name = new char[strlen(otherJedi.name) + 1];
-	strcpy(this->name, otherJedi.name);
-	this->rank = otherJedi.rank;
-	this->planet = otherJedi.planet;
-	this->spicies = new char[strlen(otherJedi.spicies) + 1];
-	strcpy(this->spicies, otherJedi.spicies);
-	this->militaryRank = new char[strlen(otherJedi.militaryRank) + 1];
-	strcpy(this->militaryRank, otherJedi.militaryRank);
 
 	return *this;
 }
 
-Jedi::Jedi(const char* _name, const JediRank _rank, const float _midichlorian, const Planet& _planet, const char* _spicies, const char* _militaryRank)
+Jedi::Jedi(const char* _name, const JediRank _rank, const double& _midichlorian, const Planet& _planet, const char* _spicies, const char* _militaryRank)
 {
 	this->SetName(_name);
 	this->SetRank(_rank);
@@ -187,7 +140,7 @@ void Jedi::SetRank(const JediRank _rank)
 	this->rank = _rank;
 }
 
-void Jedi::SetMidichlorian(const float _midichlorian)
+void Jedi::SetMidichlorian(const double _midichlorian)
 {
 	this->midichlorian = _midichlorian;
 }
@@ -229,7 +182,7 @@ JediRank Jedi::GetRank() const
 	return this->rank;
 }
 
-float Jedi::GetMidichlorian() const
+double Jedi::GetMidichlorian() const
 {
 	return this->midichlorian;
 }
@@ -291,7 +244,7 @@ std::istream& operator>>(std::istream& in, Jedi& jedi)
 	jedi.SetRank(CharArrayToEnumJedi(rank));
 
 	std::cout << "Enter midichlorian: ";
-	float midichlorian;
+	double midichlorian;
 	in >> midichlorian;
 	jedi.SetMidichlorian(midichlorian);
 
@@ -329,7 +282,7 @@ void Jedi::ReadFromFile(const char* fileName, int& position)
 		}
 
 		i++;
-		position += CountSymbols3(buffer) + 2;
+		position += CountSymbols(buffer) + 2;
 
 		if (i == 1)
 		{
@@ -341,7 +294,7 @@ void Jedi::ReadFromFile(const char* fileName, int& position)
 		}
 		else if (i == 3)
 		{
-			this->SetMidichlorian(ParseCharToInt1(buffer));
+			this->SetMidichlorian(ParseCharToInt(buffer));
 		}
 		else if (i == 4)
 		{
