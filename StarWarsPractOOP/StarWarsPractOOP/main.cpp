@@ -19,14 +19,14 @@ int main()
 	recursionReverse(integers);
 	integers.PrintLog();
 
-	Planet mars{ "Mars", "Milky way", "Macedonia", PlanetType::ChthonianPlanet };
-	Planet pluto{ "Pluto", "Milky way", "Macedonia", PlanetType::IcePlanet };
-	Planet glo{ "Glo", "Milky way", "Macedonia", PlanetType::CarbonPlanet };
+	Planet mars{ "Mars", "Milky way", "Rep", PlanetType::ChthonianPlanet };
+	Planet pluto{ "Pluto", "Milky way", "Rep", PlanetType::IcePlanet };
+	Planet glo{ "Glo", "Milky way", "Rep", PlanetType::CarbonPlanet };
 
 	Jedi yoda{ "Yoda", JediRank::GrandMaster, 1212.0, mars, "spi", "Commander" };
 	Jedi ivan{ "Ivan", JediRank::GrandMaster, 2342.0, pluto, "gka", "Polk" };
-	Jedi drag{ "Drag", JediRank::GrandMaster, 342.0, glo, "Opa", "Serji" };
-	Jedi lag{ "Lag", JediRank::GrandMaster, 7812.0, mars, "asa", "Merji" };
+	Jedi drag{ "Drag", JediRank::GrandMaster, 342.0, glo, "Ops", "Serji" };
+	Jedi lag{ "Lag", JediRank::GrandMaster, 7812.0, mars, "Asy", "Merji" };
 
 	BattleShip<Jedi> core1{ 120, 12, false, 545, yoda, 100, Ammunition::LightEquipment, 100 };
 	BattleShip<Jedi> core2{ 130, 10, false, 40, ivan, 90, Ammunition::MiddleEquipment, 30 };
