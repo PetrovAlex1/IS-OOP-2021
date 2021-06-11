@@ -17,7 +17,6 @@ public:
 
 	Car(const Car& car);
 
-
 	void print() const override;
 
 	size_t get_pref() override;

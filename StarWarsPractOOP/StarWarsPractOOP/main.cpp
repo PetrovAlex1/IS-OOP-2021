@@ -19,7 +19,7 @@ int main()
 	recursionReverse(integers);
 	integers.PrintLog();
 
-	Planet mars{ "Mars", "Milky way", "Rep", PlanetType::ChthonianPlanet };
+	/*Planet mars{ "Mars", "Milky way", "Rep", PlanetType::ChthonianPlanet };
 	Planet pluto{ "Pluto", "Milky way", "Rep", PlanetType::IcePlanet };
 	Planet glo{ "Glo", "Milky way", "Rep", PlanetType::CarbonPlanet };
 
@@ -55,7 +55,7 @@ int main()
 
 	std::cout << std::endl << "Changed ammu : " << std::endl;
 
-	battleships.print();
+	battleships.print();*/
 
 	return 0;
 }
